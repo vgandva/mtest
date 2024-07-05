@@ -808,6 +808,18 @@ body.view-control-buttons .viewControlButton {
   width: 30px;
   height: 30px;
 }
+.vr-button {
+  position: fixed;
+  bottom: 10px;
+  right: 10px;
+  padding: 10px 20px;
+  background-color: #f44336;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  z-index: 1000;
+}
 
 /* Center is at margin-left: -20px */
 .viewControlButton-1 {
