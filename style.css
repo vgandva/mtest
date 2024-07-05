@@ -1,166 +1,562 @@
-/* Reset and basic styling */
-body {
-  font-family: Arial, sans-serif;
+* {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  -ms-text-size-adjust: none;
+  -moz-text-size-adjust: none;
+  -webkit-text-size-adjust: none;
+  text-size-adjust: none;
+  -webkit-user-drag: none;
+  -webkit-touch-callout: none;
+  -ms-content-zooming: none;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+  padding: 0;
   margin: 0;
-  padding: 0;
   overflow: hidden;
-  background-color: #f0f0f0;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 16px;
+  background-color: #000;
+  color: #fff;
 }
 
-ul {
-  list-style-type: none;
-  padding: 0;
+a, a:hover, a:active, a:visited {
+  text-decoration: none;
+  color: inherit;
 }
 
-/* Header and title bar */
+#pano {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
 #titleBar {
   position: absolute;
-  top: 10px;
-  left: 10px;
-  right: 10px;
+  top: 0;
+  left: 0;
+  right: 40px;
+  height: 40px;
   text-align: center;
-  z-index: 1000;
+}
+
+.mobile #titleBar {
+  height: 50px;
+  right: 50px;
+}
+
+body.fullscreen-enabled #titleBar {
+  right: 80px;
+}
+
+body.fullscreen-enabled.mobile #titleBar {
+  right: 100px;
+}
+
+body.multiple-scenes #titleBar {
+  left: 40px;
+}
+
+body.multiple-scenes.mobile #titleBar {
+  left: 50px;
 }
 
 #titleBar .sceneName {
-  margin: 0;
-  padding: 10px;
-  background-color: rgba(255, 255, 255, 0.7);
-  border-radius: 5px;
-  font-size: 18px;
-  font-weight: bold;
+  width: 100%;
+  height: 100%;
+  line-height: 30px;
+  padding: 5px;
+  background-color: rgb(58, 68, 84);
+  background-color: rgba(58, 68, 84, 0.8);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+
+  -moz-user-select: text;
+  -webkit-user-select: text;
+  -ms-user-select: text;
+  user-select: text;
 }
 
-/* Scene list */
+.mobile #titleBar .sceneName {
+  line-height: 40px;
+}
+
+#fullscreenToggle {
+  display: none;
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 40px;
+  height: 40px;
+  padding: 5px;
+  background-color: rgb(103, 115, 131);
+  background-color: rgba(103, 115, 131, 0.8);
+}
+
+.mobile #fullscreenToggle {
+  width: 50px;
+  height: 50px;
+}
+
+body.fullscreen-enabled #fullscreenToggle {
+  display: block;
+}
+
+#fullscreenToggle .icon {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  width: 30px;
+  height: 30px;
+}
+
+.mobile #fullscreenToggle .icon {
+  top: 10px;
+  right: 10px;
+}
+
+#fullscreenToggle .icon.on {
+  display: none;
+}
+
+#fullscreenToggle .icon.off {
+  display: block;
+}
+
+#fullscreenToggle.enabled .icon.on {
+  display: block;
+}
+
+#fullscreenToggle.enabled .icon.off {
+  display: none;
+}
+
+#autorotateToggle {
+  display: block;
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 40px;
+  height: 40px;
+  padding: 5px;
+  background-color: rgb(103, 115, 131);
+  background-color: rgba(103, 115, 131, 0.8);
+}
+
+.mobile #autorotateToggle {
+  width: 50px;
+  height: 50px;
+}
+
+body.fullscreen-enabled #autorotateToggle {
+  right: 40px;
+}
+
+body.fullscreen-enabled.mobile #autorotateToggle {
+  right: 50px;
+}
+
+#autorotateToggle .icon {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  width: 30px;
+  height: 30px;
+}
+
+.mobile #autorotateToggle .icon {
+  top: 10px;
+  right: 10px;
+}
+
+#autorotateToggle .icon.on {
+  display: none;
+}
+
+#autorotateToggle .icon.off {
+  display: block;
+}
+
+#autorotateToggle.enabled .icon.on {
+  display: block;
+}
+
+#autorotateToggle.enabled .icon.off {
+  display: none;
+}
+
+#sceneListToggle {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 40px;
+  height: 40px;
+  padding: 5px;
+  background-color: rgb(103, 115, 131);
+  background-color: rgba(103, 115, 131, 0.8);
+}
+
+.mobile #sceneListToggle {
+  width: 50px;
+  height: 50px;
+}
+
+#sceneListToggle .text {
+  position: absolute;
+  top: 5px;
+  left: 15px;
+  width: 100%;
+  line-height: 30px;
+}
+
+#sceneListToggle .icon {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  width: 30px;
+  height: 30px;
+}
+
+.mobile #sceneListToggle .icon {
+  top: 10px;
+  right: 10px;
+}
+
+#sceneListToggle .icon.on {
+  display: none;
+}
+
+#sceneListToggle .icon.off {
+  display: block;
+}
+
+#sceneListToggle.enabled .icon.on {
+  display: block;
+}
+
+#sceneListToggle.enabled .icon.off {
+  display: none;
+}
+
 #sceneList {
   position: absolute;
-  top: 10px;
-  left: 10px;
-  z-index: 1000;
+  top: 0;
+  left: -220px;
+  padding-top: 40px;
+  width: 220px;
+  max-height: 100%;
+  overflow-x: hidden;
+  overflow-y: auto;
+  margin-left: 0;
+  -webkit-transition: margin-left 0.5s ease-in-out;
+  transition: margin-left 0.5s ease-in-out;
+}
+
+.mobile #sceneList {
+  padding-top: 50px;
 }
 
 #sceneList .scenes {
-  padding: 10px;
-  background-color: rgba(255, 255, 255, 0.7);
-  border-radius: 5px;
-  max-height: 200px;
-  overflow-y: auto;
+  width: 100%;
+  background-color: rgb(58, 68, 84);
+  background-color: rgba(58, 68, 84, 0.8);
+}
+
+.mobile #sceneList {
+  width: 100%;
+  height: 100%;
+  left: -100%;
+}
+
+.mobile #sceneList.enabled {
+  margin-left: 100%;
+}
+
+.mobile #sceneList .scenes {
+  height: 100%;
+}
+
+#sceneList.enabled {
+  margin-left: 220px;
 }
 
 #sceneList .scene {
   display: block;
-  margin-bottom: 5px;
-  cursor: pointer;
+  width: 100%;
+  height: 30px;
+}
+
+.mobile #sceneList .scene {
+  height: 40px;
+}
+
+#sceneList .scene .text {
+  width: 100%;
+  height: 100%;
+  padding: 0 15px;
+  line-height: 30px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.mobile #sceneList .scene .text {
+  line-height: 40px;
+}
+
+.no-touch #sceneList .scene:hover {
+  background-color: rgb(103, 115, 131);
+  background-color: rgba(103, 115, 131, 0.8);
 }
 
 #sceneList .scene.current {
-  font-weight: bold;
+  background-color: rgb(103, 115, 131);
+  background-color: rgba(103, 115, 131, 0.8);
 }
 
-/* Controls */
-#autorotateToggle,
-#fullscreenToggle,
-#sceneListToggle {
-  position: absolute;
-  bottom: 10px;
-  right: 10px;
-  z-index: 1000;
-  cursor: pointer;
-}
-
-#autorotateToggle,
-#fullscreenToggle,
-#sceneListToggle,
-.viewControlButton {
-  display: inline-block;
-  margin-left: 5px;
-  background-color: rgba(255, 255, 255, 0.7);
-  padding: 5px;
-  border-radius: 5px;
-}
-
-#vr-button {
-  position: absolute;
-  bottom: 10px;
-  left: 10px;
-  padding: 10px 20px;
-  background-color: #4CAF50;
-  color: white;
-  text-decoration: none;
-  border-radius: 5px;
-  z-index: 1000;
-  cursor: pointer;
-}
-
-/* Icons */
-.icon {
-  width: 24px;
-  height: 24px;
-  vertical-align: middle;
-}
-
-/* Mobile-specific styles */
-body.mobile #titleBar,
-body.mobile #sceneList,
-body.mobile #autorotateToggle,
-body.mobile #fullscreenToggle,
-body.mobile #sceneListToggle {
+body.single-scene #sceneList, body.single-scene #sceneListToggle {
   display: none;
 }
 
-/* Tooltip fallback for older browsers */
-body.tooltip-fallback .hotspot-tooltip {
-  display: none;
+.link-hotspot {
+  width: 60px;
+  height: 60px;
+  margin-left: -30px;
+  margin-top: -30px;
+  opacity: 0.9;
+  -webkit-transition: opacity 0.2s;
+  transition: opacity 0.2s;
 }
 
-/* Hotspots */
-.hotspot {
-  position: absolute;
-  transform: translate(-50%, -50%);
-  cursor: pointer;
+.no-touch .link-hotspot:hover {
+  opacity: 1;
+}
+
+.mobile .link-hotspot {
+  width: 70px;
+  height: 70px;
 }
 
 .link-hotspot-icon {
-  width: 24px;
-  height: 24px;
-}
-
-.link-hotspot-tooltip,
-.info-hotspot-header,
-.info-hotspot-close-wrapper {
-  display: none;
-}
-
-/* Fullscreen mode */
-body.fullscreen-enabled #fullscreenToggle.enabled .off,
-body.fullscreen-disabled #fullscreenToggle.disabled .on {
-  display: none;
-}
-
-/* View controls */
-.viewControlButton {
-  position: absolute;
-  z-index: 1000;
-  background-color: rgba(255, 255, 255, 0.7);
-  padding: 5px;
-  border-radius: 5px;
+  width: 100%;
+  height: 100%;
   cursor: pointer;
 }
 
-.viewControlButton img {
-  width: 24px;
-  height: 24px;
+.link-hotspot-tooltip {
+  position: absolute;
+  left: 100%;
+  top: 14px;
+  margin-left: 3px;
+  font-size: 16px;
+  max-width: 300px;
+  padding: 8px 10px;
+  border-radius: 5px;
+  background-color: rgb(58, 68, 84);
+  background-color: rgba(58, 68, 84, 0.8);
+  color: #fff;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  cursor: pointer;
+  opacity: 0;
+  -ms-transform: translateX(-8px);
+  -webkit-transform: translateX(-8px);
+  transform: translateX(-8px);
+  -webkit-transition: -webkit-transform 0.3s 0.2s, opacity 0.3s 0.2s;
+  transition: transform 0.3s 0.2s, opacity 0.3s 0.2s;
 }
 
-.viewControlButton-1 { top: 10px; left: calc(50% - 24px); }
-.viewControlButton-2 { bottom: 10px; left: calc(50% - 24px); }
-.viewControlButton-3 { top: calc(50% - 24px); left: 10px; }
-.viewControlButton-4 { top: calc(50% - 24px); right: 10px; }
-.viewControlButton-5 { bottom: 10px; right: calc(50% - 24px); }
-.viewControlButton-6 { top: 10px; right: calc(50% - 24px); }
-
-/* Media queries */
-@media (max-width: 768px) {
-  /* Adjust styles for smaller screens */
+.link-hotspot-tooltip span {
+  white-space: nowrap;
 }
 
+.link-hotspot:hover .link-hotspot-tooltip {
+  opacity: 1;
+  -ms-transform: translateX(0);
+  -webkit-transform: translateX(0);
+  transform: translateX(0);
+}
+
+.info-hotspot {
+  width: 60px;
+  height: 60px;
+  margin-left: -30px;
+  margin-top: -30px;
+  opacity: 0.9;
+  -webkit-transition: opacity 0.2s;
+  transition: opacity 0.2s;
+}
+
+.no-touch .info-hotspot:hover {
+  opacity: 1;
+}
+
+.mobile .info-hotspot {
+  width: 70px;
+  height: 70px;
+}
+
+.info-hotspot-icon {
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+}
+
+.info-hotspot-text {
+  position: absolute;
+  left: 100%;
+  top: 14px;
+  margin-left: 3px;
+  font-size: 16px;
+  max-width: 300px;
+  padding: 8px 10px;
+  border-radius: 5px;
+  background-color: rgb(58, 68, 84);
+  background-color: rgba(58, 68, 84, 0.8);
+  color: #fff;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  cursor: pointer;
+  opacity: 0;
+  -ms-transform: translateX(-8px);
+  -webkit-transform: translateX(-8px);
+  transform: translateX(-8px);
+  -webkit-transition: -webkit-transform 0.3s 0.2s, opacity 0.3s 0.2s;
+  transition: transform 0.3s 0.2s, opacity 0.3s 0.2s;
+}
+
+.info-hotspot-text span {
+  white-space: nowrap;
+}
+
+.info-hotspot:hover .info-hotspot-text {
+  opacity: 1;
+  -ms-transform: translateX(0);
+  -webkit-transform: translateX(0);
+  transform: translateX(0);
+}
+
+.info-hotspot-header {
+  margin: -8px -10px 10px -10px;
+  padding: 8px 10px;
+  border-radius: 5px 5px 0 0;
+  background-color: rgb(103, 115, 131);
+  background-color: rgba(103, 115, 131, 0.8);
+  cursor: pointer;
+}
+
+.info-hotspot-header .text {
+  font-weight: bold;
+}
+
+.info-hotspot-header .close {
+  float: right;
+  width: 20px;
+  height: 20px;
+  padding: 2px;
+  cursor: pointer;
+}
+
+.info-hotspot-text:hover .info-hotspot-header .close {
+  display: block;
+}
+
+.info-hotspot-text:hover .info-hotspot-header .close .x-icon {
+  display: block;
+}
+
+.info-hotspot-text:hover .info-hotspot-header .close .plus-icon {
+  display: none;
+}
+
+.info-hotspot-text .info-hotspot-body {
+  display: none;
+  cursor: default;
+}
+
+.info-hotspot-text:hover .info-hotspot-body {
+  display: block;
+}
+
+.info-hotspot:hover .info-hotspot-body {
+  display: none;
+}
+
+.no-touch .info-hotspot:hover .info-hotspot-body {
+  display: block;
+}
+
+.info-hotspot-body {
+  cursor: default;
+}
+
+#vrButton {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 40px;
+  height: 40px;
+  padding: 5px;
+  background-color: rgb(103, 115, 131);
+  background-color: rgba(103, 115, 131, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#vrButton .icon {
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+}
+
+#vrButton .icon.vr {
+  display: block;
+}
+
+#vrButton .icon.vr-off {
+  display: none;
+}
+
+#vrButton.enabled .icon.vr {
+  display: none;
+}
+
+#vrButton.enabled .icon.vr-off {
+  display: block;
+}
+
+.mobile #vrButton {
+  width: 50px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.mobile #vrButton .icon {
+  width: 100%;
+  height: 100%;
+}
+
+body.fullscreen-enabled #vrButton {
+  right: 40px;
+}
+
+body.fullscreen-enabled.mobile #vrButton {
+  right: 50px;
+}
