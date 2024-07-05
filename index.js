@@ -109,28 +109,25 @@
   });
   // Display the initial scene.
   switchScene(scenes[0]);
-// Create and add VR button to the DOM
-var vrButton = document.createElement('button');
-vrButton.id = 'vr-button';
-vrButton.innerText = 'Enter VR';
-document.body.appendChild(vrButton);
 
-// Add event listener for VR button
-vrButton.addEventListener('click', function() {
-    if (navigator.getVRDisplays) {
-        navigator.getVRDisplays().then(function(displays) {
-            if (displays.length > 0) {
-                var display = displays[0];
-                display.requestPresent([{source: panoElement}]);
-            } else {
-                alert("No VR displays found");
-            }
-        });
-    } else {
-        alert("WebVR not supported");
-    }
-});
+  // Create and add VR button to the DOM
+  var vrButton = document.getElementById('vr-button');
 
+  // Add event listener for VR button
+  vrButton.addEventListener('click', function() {
+      if (navigator.getVRDisplays) {
+          navigator.getVRDisplays().then(function(displays) {
+              if (displays.length > 0) {
+                  var display = displays[0];
+                  display.requestPresent([{source: panoElement}]);
+              } else {
+                  alert("No VR displays found");
+              }
+          });
+      } else {
+          alert("WebVR not supported");
+      }
+  });
   // Set up autorotate, if enabled.
   var autorotate = Marzipano.autorotate({
     yawSpeed: 0.03,
