@@ -1,84 +1,30 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Project Title</title>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <style>
-    body {
-      margin: 0;
-      padding: 0;
-      font-family: Arial, sans-serif;
-      background-color: #f0f0f0;
-    }
-    
-    #pano {
-      width: 100%;
-      height: 100vh; /* Adjust as needed */
-    }
-    
-    #sceneList {
-      position: absolute;
-      top: 10px;
-      right: 10px;
-      background-color: rgba(255, 255, 255, 0.7);
-      padding: 10px;
-      border-radius: 5px;
-      z-index: 1000;
-    }
-    
-    .scenes {
-      list-style-type: none;
-      padding: 0;
-      margin: 0;
-    }
-    
-    .scene {
-      display: block;
-      margin-bottom: 5px;
-      cursor: pointer;
-    }
-    
-    #titleBar {
-      position: absolute;
-      top: 10px;
-      left: 50%;
-      transform: translateX(-50%);
-      text-align: center;
-      background-color: rgba(255, 255, 255, 0.7);
-      padding: 10px;
-      border-radius: 5px;
-      z-index: 1000;
-    }
-    
-    #vr-button {
-      position: absolute;
-      bottom: 10px;
-      left: 50%;
-      transform: translateX(-50%);
-      padding: 10px 20px;
-      background-color: #4CAF50;
-      color: white;
-      text-decoration: none;
-      border-radius: 5px;
-      z-index: 1000;
-      cursor: pointer;
-    }
-  </style>
+<title>Project Title</title>
+<meta charset="utf-8">
+<meta name="viewport" content="target-densitydpi=device-dpi, width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, minimal-ui" />
+<style> @-ms-viewport { width: device-width; } </style>
+<link rel="stylesheet" href="vendor/reset.min.css">
+<link rel="stylesheet" href="style.css">
+<script src="vendor/webvr-polyfill.min.js"></script>
 </head>
-<body>
+<body class="multiple-scenes">
 
 <div id="pano"></div>
 
 <div id="sceneList">
   <ul class="scenes">
-    <a href="javascript:void(0)" class="scene" data-id="0-living-room1">
-      <li class="text">Living Room 1</li>
-    </a>
-    <a href="javascript:void(0)" class="scene" data-id="1-living-room-2">
-      <li class="text">Living Room 2</li>
-    </a>
-    <!-- Add more scenes as needed -->
+    <li>
+      <a href="javascript:void(0)" class="scene" data-id="0-living-room1">
+        <div class="text">living room1</div>
+      </a>
+    </li>
+    <li>
+      <a href="javascript:void(0)" class="scene" data-id="1-living-room-2">
+        <div class="text">living room 2</div>
+      </a>
+    </li>
   </ul>
 </div>
 
@@ -86,78 +32,49 @@
   <h1 class="sceneName"></h1>
 </div>
 
-<a id="vr-button" class="vr-button">Enter VR</a>
+<a href="javascript:void(0)" id="autorotateToggle">
+  <img class="icon off" src="img/play.png">
+  <img class="icon on" src="img/pause.png">
+</a>
 
+<a href="javascript:void(0)" id="fullscreenToggle">
+  <img class="icon off" src="img/fullscreen.png">
+  <img class="icon on" src="img/windowed.png">
+</a>
+
+<a href="javascript:void(0)" id="sceneListToggle">
+  <img class="icon off" src="img/expand.png">
+  <img class="icon on" src="img/collapse.png">
+</a>
+
+<a id="vr-button" class="vr-button" href="javascript:void(0)">
+  <img class="icon" src="img/vr.png">
+</a>
+
+<a href="javascript:void(0)" id="viewUp" class="viewControlButton viewControlButton-1">
+  <img class="icon" src="img/up.png">
+</a>
+<a href="javascript:void(0)" id="viewDown" class="viewControlButton viewControlButton-2">
+  <img class="icon" src="img/down.png">
+</a>
+<a href="javascript:void(0)" id="viewLeft" class="viewControlButton viewControlButton-3">
+  <img class="icon" src="img/left.png">
+</a>
+<a href="javascript:void(0)" id="viewRight" class="viewControlButton viewControlButton-4">
+  <img class="icon" src="img/right.png">
+</a>
+<a href="javascript:void(0)" id="viewIn" class="viewControlButton viewControlButton-5">
+  <img class="icon" src="img/plus.png">
+</a>
+<a href="javascript:void(0)" id="viewOut" class="viewControlButton viewControlButton-6">
+  <img class="icon" src="img/minus.png">
+</a>
+
+<script src="vendor/screenfull.min.js"></script>
+<script src="vendor/bowser.min.js"></script>
 <script src="vendor/marzipano.js"></script>
 <script src="data.js"></script>
 <script src="index.js"></script>
-
-<script>
-  document.addEventListener('DOMContentLoaded', function() {
-    var vrButton = document.getElementById('vr-button');
-    var panoElement = document.getElementById('pano');
-    var sceneNameElement = document.querySelector('.sceneName');
-    var sceneElements = document.querySelectorAll('.scene');
-
-    var viewerOpts = {
-      controls: {
-        mouseViewMode: 'drag'
-      }
-    };
-
-    var viewer = new Marzipano.Viewer(panoElement, viewerOpts);
-
-    // Replace with your actual scene creation logic
-    var sceneData = [
-      { id: '0-living-room1', name: 'Living Room 1' },
-      { id: '1-living-room-2', name: 'Living Room 2' }
-      // Add more scenes as needed
-    ];
-
-    var scenes = sceneData.map(function(data) {
-      var scene = viewer.createScene({
-        source: Marzipano.ImageUrlSource.fromString('path_to_your_image/{z}/{f}/{y}/{x}.jpg'),
-        geometry: new Marzipano.CubeGeometry([{ tileSize: 512, size: 512, fallbackOnly: true }]),
-        view: new Marzipano.RectilinearView(),
-        pinFirstLevel: true
-      });
-
-      // Handle scene switching
-      var switchScene = function() {
-        scene.switchTo();
-        sceneNameElement.textContent = data.name;
-      };
-
-      var link = document.querySelector('.scene[data-id="' + data.id + '"]');
-      link.addEventListener('click', switchScene);
-
-      return {
-        data: data,
-        scene: scene
-      };
-    });
-
-    // VR button handling
-    vrButton.addEventListener('click', function() {
-      if (navigator.getVRDisplays) {
-        navigator.getVRDisplays().then(function(displays) {
-          if (displays.length > 0) {
-            var display = displays[0];
-            display.requestPresent([{ source: panoElement }]);
-          } else {
-            alert('No VR displays found.');
-          }
-        });
-      } else {
-        alert('WebVR not supported.');
-      }
-    });
-
-    // Initial scene setup
-    scenes[0].scene.switchTo();
-    sceneNameElement.textContent = sceneData[0].name;
-  });
-</script>
 
 </body>
 </html>
