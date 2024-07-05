@@ -560,3 +560,18 @@ body.fullscreen-enabled #vrButton {
 body.fullscreen-enabled.mobile #vrButton {
   right: 50px;
 }
+/* style.css */
+@-ms-viewport { width: device-width; }
+
+#vr-button {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  z-index: 100;
+  background-color: rgba(0, 0, 0, 0.5);
+  padding: 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  color: white;
+  text-decoration: none;
+}
